@@ -1,26 +1,27 @@
 # Sales Insights ETL with Azure and Power BI
 
 ## Table of Contents
-1. Project Overview
-2. Technologies Used
-3. Dataset Overview
-4. Data Pipeline
-5. Repository Structure
-7. Dashboard
-8. Conclusion
-9. Contacts
+1. [Project Overview](#project-overview)
+2. [Technologies Used](#technologies-used)
+3. [Dataset Overview](#dataset-overview)
+4. [Data Pipeline](#data-pipeline)
+5. [Project Setup](#project-setup)
+6. [Dashboard](#dashboard)
+7. [Conclusion](#conclusion)
+8. [Contacts](#contacts)
+9. [Acknowledgements](#acknowledgements)
 
 ## Project Overview
-This project is a comprehensive data engineering solution that extracts sales data from a Github Repository, uploads it in Azure Blob Storage, performs data transformations using Azure Data Factory, and visualizes the results through interactive dashboards in Power BI. The goal is to empower business analysts and decision-makers with actionable insights from the sales data, enabling improved sales strategies, customer targeting, and overall business performance.
+This project is a comprehensive data engineering solution that extracts sales data from a GitHub repository, uploads it to Azure Blob Storage, performs data transformations using Azure Data Factory, and visualizes the results through interactive dashboards in Power BI. The goal is to empower business analysts and decision-makers with actionable insights from the sales data, enabling improved sales strategies, customer targeting, and overall business performance.
 
 ## Technologies Used
-- Azure Data Factory: Used for orchestrating data extraction, transformation and loading processes.
-- Azure Blob Storage: Used as the initial data storage solution.
-- Azure Data Factory Studio: Used for data transformation.
-- Azure SQL Database: Used to store the cleaned sales data.
-- Azure Data Studio: Used to verify the data success of the ETL process (Storing the data from Azure Blob Storage to Aure SQL Database).
-- Power BI: Used for data visualization and dashboard creation.
-- GitHub: Hosting the raw Sales data.
+- **Azure Data Factory**: Used for orchestrating data extraction, transformation, and loading processes.
+- **Azure Blob Storage**: Used as the initial data storage solution.
+- **Azure Data Factory Studio**: Used for data transformation.
+- **Azure SQL Database**: Used to store the cleaned sales data.
+- **Azure Data Studio**: Used to verify the success of the ETL process (storing data from Azure Blob Storage to Azure SQL Database).
+- **Power BI**: Used for data visualization and dashboard creation.
+- **GitHub**: Hosting the raw sales data.
 
 ## Dataset Overview
 The dataset includes the following columns:
@@ -49,9 +50,6 @@ The dataset includes the following columns:
 ## Data Pipeline
 ![Project Pipeline](https://github.com/user-attachments/assets/707ea45d-b7bf-4bb0-bed5-5e25bd512f16)
 
-## Repository Structure
-
-
 ## Project Setup
 ### Steps Completed:
 - [x] **Create a Storage Account**
@@ -77,9 +75,14 @@ The dataset includes the following columns:
 The data from Azure SQL Database is visualized using Power BI, enabling insightful analysis and reporting of sales data.
 ![SuperStore Overview Dashboard](https://github.com/user-attachments/assets/d1568319-1c78-4931-aa4e-2211f2913b89)
 
+## Conclusion
+This project demonstrates the integration of multiple Azure services to create a seamless data pipeline, from data extraction to visualization. The insights gained from the sales data can significantly influence business strategies and decisions, driving better outcomes.
 
-## License
-This project is licensed under the MIT License.
+## Contacts
+For questions or inquiries about this project, please contact:
+- **Name**: NIGROU Nouhaila
+- **Email**: nouhailangr275128@gmail.com
+- **LinkedIn**: www.linkedin.com/in/nouhaila-nigrou
 
 ## Acknowledgements
 Thanks to Microsoft Azure for providing powerful cloud services and to Power BI for enabling effective data visualization.
