@@ -51,16 +51,16 @@ The dataset includes the following columns:
 ![Project Pipeline](https://github.com/user-attachments/assets/707ea45d-b7bf-4bb0-bed5-5e25bd512f16)
 
 ## Project Setup
-### Steps Completed:
+### Steps Completed On Microsoft Azure:
 - [x] **Create a Storage Account**
 - [x] **Create a Blob Container**
 - [x] **Upload the Dataset**
 - [x] **Create Azure SQL Database**
-- [x] **Azure Data Studio**
+- [x] **Head to Azure Data Studio**
 - [x] **Create the SalesData Table**
 - [x] **Set Up Azure Data Factory for ETL**
   - Create an Azure Data Factory Instance
-  - Open the Azure Data Factory Studio
+  - Use Azure Data Factory Studio for transformations
   - Create a Pipeline for ETL
     - Create Linked Services (Connections)
     - Create a Linked Service to Azure SQL Database
