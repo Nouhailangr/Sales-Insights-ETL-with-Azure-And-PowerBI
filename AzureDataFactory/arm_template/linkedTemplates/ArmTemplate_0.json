@@ -1,0 +1,440 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "SalesDataFactorie"
+        },
+        "SalesBlobLinkedService_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SalesBlobLinkedService'"
+        },
+        "SalesSQLLinkedService_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'SalesSQLLinkedService'"
+        },
+        "SalesSQLLinkedService_properties_typeProperties_server": {
+            "type": "string",
+            "defaultValue": "salesdbserver123.database.windows.net"
+        },
+        "SalesSQLLinkedService_properties_typeProperties_database": {
+            "type": "string",
+            "defaultValue": "SalesDB"
+        },
+        "SalesSQLLinkedService_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "adminuser"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/SalesBlobLinkedService')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "[parameters('SalesBlobLinkedService_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SalesSQLLinkedService')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureSqlDatabase",
+                "typeProperties": {
+                    "server": "[parameters('SalesSQLLinkedService_properties_typeProperties_server')]",
+                    "database": "[parameters('SalesSQLLinkedService_properties_typeProperties_database')]",
+                    "encrypt": "mandatory",
+                    "trustServerCertificate": false,
+                    "authenticationType": "SQL",
+                    "userName": "[parameters('SalesSQLLinkedService_properties_typeProperties_userName')]",
+                    "password": {
+                        "type": "SecureString",
+                        "value": "[parameters('SalesSQLLinkedService_password')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SalesBlobLinkedService",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DelimitedText",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "fileName": "Cleaned_Superstore_Dataset.csv",
+                        "container": "sales-data"
+                    },
+                    "columnDelimiter": ",",
+                    "escapeChar": "\\",
+                    "firstRowAsHeader": true,
+                    "quoteChar": "\""
+                },
+                "schema": [
+                    {
+                        "name": "Prop_0",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Order ID",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Order Date",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Ship Date",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Ship Mode",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Customer ID",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Customer Name",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Segment",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Country",
+                        "type": "String"
+                    },
+                    {
+                        "name": "City",
+                        "type": "String"
+                    },
+                    {
+                        "name": "State",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Postal Code",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Region",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Product ID",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Category",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Sub-Category",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Product Name",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Sales",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Quantity",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Discount",
+                        "type": "String"
+                    },
+                    {
+                        "name": "Profit",
+                        "type": "String"
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/SalesBlobLinkedService')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SalesSQLLinkedService",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "OrderID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "OrderDate",
+                        "type": "date"
+                    },
+                    {
+                        "name": "ShipDate",
+                        "type": "date"
+                    },
+                    {
+                        "name": "CustomerID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ShipMode",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CustomerName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Segment",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Country",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "City",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "State",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "PostalCode",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Region",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ProductID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Category",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "SubCategory",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ProductName",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Sales",
+                        "type": "decimal",
+                        "precision": 10,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Quantity",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "Discount",
+                        "type": "decimal",
+                        "precision": 5,
+                        "scale": 2
+                    },
+                    {
+                        "name": "Profit",
+                        "type": "decimal",
+                        "precision": 10,
+                        "scale": 2
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "SalesData"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/SalesSQLLinkedService')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/dataflow1')]",
+            "type": "Microsoft.DataFactory/factories/dataflows",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "type": "MappingDataFlow",
+                "typeProperties": {
+                    "sources": [
+                        {
+                            "dataset": {
+                                "referenceName": "DelimitedText1",
+                                "type": "DatasetReference"
+                            },
+                            "name": "source1"
+                        }
+                    ],
+                    "sinks": [
+                        {
+                            "dataset": {
+                                "referenceName": "AzureSqlTable1",
+                                "type": "DatasetReference"
+                            },
+                            "name": "sink1"
+                        }
+                    ],
+                    "transformations": [
+                        {
+                            "name": "derivedColumn1",
+                            "description": "updating the columns 'Order Date, Ship Date;'"
+                        }
+                    ],
+                    "scriptLines": [
+                        "source(output(",
+                        "          Prop_0 as string,",
+                        "          {Order ID} as string,",
+                        "          {Order Date} as string,",
+                        "          {Ship Date} as string,",
+                        "          {Ship Mode} as string,",
+                        "          {Customer ID} as string,",
+                        "          {Customer Name} as string,",
+                        "          Segment as string,",
+                        "          Country as string,",
+                        "          City as string,",
+                        "          State as string,",
+                        "          {Postal Code} as string,",
+                        "          Region as string,",
+                        "          {Product ID} as string,",
+                        "          Category as string,",
+                        "          {Sub-Category} as string,",
+                        "          {Product Name} as string,",
+                        "          Sales as string,",
+                        "          Quantity as string,",
+                        "          Discount as string,",
+                        "          Profit as string",
+                        "     ),",
+                        "     allowSchemaDrift: true,",
+                        "     validateSchema: false,",
+                        "     ignoreNoFilesFound: false) ~> source1",
+                        "source1 derive({Order Date} = toDate({Order Date},'MM/DD/YYYY'),",
+                        "          {Ship Date} = toDate({Ship Date},'MM/DD/YYYY')) ~> derivedColumn1",
+                        "derivedColumn1 sink(allowSchemaDrift: true,",
+                        "     validateSchema: false,",
+                        "     input(",
+                        "          OrderID as string,",
+                        "          OrderDate as date,",
+                        "          ShipDate as date,",
+                        "          CustomerID as string,",
+                        "          ShipMode as string,",
+                        "          CustomerName as string,",
+                        "          Segment as string,",
+                        "          Country as string,",
+                        "          City as string,",
+                        "          State as string,",
+                        "          PostalCode as string,",
+                        "          Region as string,",
+                        "          ProductID as string,",
+                        "          Category as string,",
+                        "          SubCategory as string,",
+                        "          ProductName as string,",
+                        "          Sales as decimal(10,2),",
+                        "          Quantity as integer,",
+                        "          Discount as decimal(5,2),",
+                        "          Profit as decimal(10,2)",
+                        "     ),",
+                        "     deletable:false,",
+                        "     insertable:true,",
+                        "     updateable:false,",
+                        "     upsertable:false,",
+                        "     format: 'table',",
+                        "     skipDuplicateMapInputs: true,",
+                        "     skipDuplicateMapOutputs: true,",
+                        "     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+                "[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/pipeline1')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "dataflow1",
+                        "type": "ExecuteDataFlow",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "dataflow": {
+                                "referenceName": "dataflow1",
+                                "type": "DataFlowReference",
+                                "parameters": {},
+                                "datasetParameters": {
+                                    "source1": {},
+                                    "sink1": {}
+                                }
+                            },
+                            "staging": {},
+                            "compute": {
+                                "coreCount": 8,
+                                "computeType": "General"
+                            },
+                            "traceLevel": "Fine"
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2024-10-26T10:23:59Z"
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "SalesDataFactorie"
+        },
+        "SalesBlobLinkedService_connectionString": {
+            "value": ""
+        },
+        "SalesSQLLinkedService_password": {
+            "value": ""
+        },
+        "SalesSQLLinkedService_properties_typeProperties_server": {
+            "value": "salesdbserver123.database.windows.net"
+        },
+        "SalesSQLLinkedService_properties_typeProperties_database": {
+            "value": "SalesDB"
+        },
+        "SalesSQLLinkedService_properties_typeProperties_userName": {
+            "value": "adminuser"
+        }
+    }
+}
