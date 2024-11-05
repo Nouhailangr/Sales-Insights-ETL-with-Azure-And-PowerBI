@@ -73,7 +73,8 @@ The dataset includes the following columns:
 
 ## Dashboard
 The data from Azure SQL Database is visualized using Power BI, enabling insightful analysis and reporting of sales data.
-![SuperStore Overview Dashboard](https://github.com/user-attachments/assets/d1568319-1c78-4931-aa4e-2211f2913b89)
+![Screenshot 2024-11-05 181853](https://github.com/user-attachments/assets/ac5df43c-6d03-4431-99ce-916e0e1fbe9a)
+
 
 ## Conclusion
 This project demonstrates the integration of multiple Azure services to create a seamless data pipeline, from data extraction to visualization. The insights gained from the sales data can significantly influence business strategies and decisions, driving better outcomes.
